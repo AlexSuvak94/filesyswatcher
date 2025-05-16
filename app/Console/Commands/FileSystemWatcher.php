@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class FileSystemWatcher extends Command
 {
-    // Our command signature aaa
+    // Our command signature
     protected $signature = "fs:watch";
 
     protected $description = "Watch the storage/app/watched directory for file changes and handle them";
@@ -29,7 +29,6 @@ class FileSystemWatcher extends Command
 
         // This is an infinite loop to keep watching
         while (true) {
-            // Perform one scan-check
             $this->scanAndProcess();
             sleep(5);
         }
@@ -55,6 +54,7 @@ class FileSystemWatcher extends Command
         $this->saveCurrentState($currentState);
 
         $this->info("Scan complete.");
+        $this->info(""); // Blank line
     }
 
     protected function loadPreviousState()
@@ -240,7 +240,7 @@ class FileSystemWatcher extends Command
             $zip->extractTo($extractTo);
             $zip->close();
 
-            $this->info("ZIP EXTRACTED SUCCESSFULLY!");
+            $this->info("Zip extracted successfully.");
         } else {
             $this->error("Failed to open zip file: $file");
         }
