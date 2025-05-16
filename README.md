@@ -2,8 +2,11 @@
 
 1. Clone the repo
 2. Run: composer install (in the project root folder)
+3. Run: php artisan fs:watch (to start the watcher)
 
-PLEASE NOTE:
+And that's it!
+
+*** PLEASE NOTE:
 
 This repository was built as part of a technical assignment. The main goal was to demonstrate practical knowledge of Laravel, file operations, CLI commands, and external integrations. Some implementation choices were made for simplicity, clarity, and speed of delivery, and are not intended for production use as-is.
 
