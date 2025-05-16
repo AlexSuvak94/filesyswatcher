@@ -1,3 +1,8 @@
+## Getting Started
+
+1. Clone the repo
+2. Run: composer install (in the project root folder)
+
 PLEASE NOTE:
 
 This repository was built as part of a technical assignment. The main goal was to demonstrate practical knowledge of Laravel, file operations, CLI commands, and external integrations. Some implementation choices were made for simplicity, clarity, and speed of delivery, and are not intended for production use as-is.
