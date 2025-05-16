@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class FileSystemWatcher extends Command
 {
-    // Our command signature
+    // The command signature
     protected $signature = "fs:watch";
 
     protected $description = "Watch the storage/app/watched directory for file changes and handle them";
