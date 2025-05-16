@@ -281,7 +281,7 @@ class FileSystemWatcher extends Command
         // Save over the original
         file_put_contents($path, $optimizedData);
 
-        $this->info("Optimized: $file");
+        $this->info("Optimized JPG: $file");
     }
 
     protected function appendText(string $file)
