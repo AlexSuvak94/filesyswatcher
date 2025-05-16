@@ -138,41 +138,46 @@ class FileSystemWatcher extends Command
     protected function handleDeletedFile(string $file)
     {
         $this->info("Deleted $file ... Replacing with a meme image.");
-
-        $response = Http::withOptions(['verify' => false])->get('https://meme-api.com/gimme');
-        if (!$response->successful()) {
-            $this->error("Failed to fetch meme from the API");
-            return;
-        }
-
-        $memeData = $response->json();
-        if (!isset($memeData['url'])) {
-            $this->error("Meme API response doesn't contain a valid URL.");
-            return;
-        }
-
-        $memeUrl = $memeData['url'];
-
-        // Determine the file extension from the meme URL
-        $extension = pathinfo(parse_url($memeUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
-
-        // Define the path to save the meme image
-        $filenameWithoutExt = pathinfo($file)['filename'];
-        $targetPath = storage_path('app/watched/' . $filenameWithoutExt . '.png');
-
-        // Download the MEME image
         try {
-            $imageResponse = Http::withOptions(['verify' => false])->get($memeUrl);
-            if (!$imageResponse->successful()) {
-                $this->error("Failed to download meme image.");
+            $response = Http::timeout(5)->withOptions(['verify' => false])->get('https://meme-api.com/gimme');
+            if (!$response->successful()) {
+                $this->error("Failed to fetch meme from the API");
                 return;
             }
 
-            file_put_contents($targetPath, $imageResponse->body());
-            $this->info("Replaced deleted file with meme from URL: $memeUrl");
-        } catch (Exception $e) {
-            $this->error($e->getMessage());
+            $memeData = $response->json();
+            if (!isset($memeData['url'])) {
+                $this->error("Meme API response doesn't contain a valid URL.");
+                return;
+            }
+
+            $memeUrl = $memeData['url'];
+
+            // Determine the file extension from the meme URL
+            $extension = pathinfo(parse_url($memeUrl, PHP_URL_PATH), PATHINFO_EXTENSION);
+
+            // Define the path to save the meme image
+            $filenameWithoutExt = pathinfo($file)['filename'];
+            $targetPath = storage_path('app/watched/' . $filenameWithoutExt . ".$extension");
+
+            // Download the MEME image
+            try {
+                $imageResponse = Http::timeout(5)->withOptions(['verify' => false])->get($memeUrl);
+                if (!$imageResponse->successful()) {
+                    $this->error("Failed to download meme image.");
+                    return;
+                }
+
+                file_put_contents($targetPath, $imageResponse->body());
+                $this->info("Replaced deleted file with meme from URL: $memeUrl");
+            } catch (Exception $e) {
+                $this->error($e->getMessage());
+            }
+
+        } catch (\Exception $ee) {
+            $this->error("MEME API unresponsive --- too slow.");
         }
+
     }
 
     protected function processFile(string $file)
