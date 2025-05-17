@@ -1,10 +1,10 @@
 ## Getting Started
 
-1. Clone the repo
+1. Unpack the repo
 2. Run: composer install (in the project root folder)
 3. Run: php artisan fs:watch (to start the watcher)
 
-And that's it!
+And that's it! It will now track changes in the storage/app/watched folder
 
 *** PLEASE NOTE:
 

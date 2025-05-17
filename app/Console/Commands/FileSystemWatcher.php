@@ -25,7 +25,9 @@ class FileSystemWatcher extends Command
 
     public function handle()
     {
+        $this->info(""); // Blank line
         $this->info("Starting file system watcher...");
+        $this->info(""); // Blank line
 
         // This is an infinite loop to keep watching
         while (true) {
@@ -36,7 +38,7 @@ class FileSystemWatcher extends Command
 
     protected function scanAndProcess()
     {
-        $this->info("Scanning files...");
+        $this->info("Scanning storage/app/watched");
 
         // Step 1: Load previous state from JSON file
         $previousState = $this->loadPreviousState();
@@ -298,5 +300,6 @@ class FileSystemWatcher extends Command
         $baconText = "\n\n" . implode("\n\n", $baconTextArray) . "\n\n Appended by FileSystemWatcher";
 
         file_put_contents($path, $baconText, FILE_APPEND);
+        $this->info("Text appended to file: $file");
     }
 }
