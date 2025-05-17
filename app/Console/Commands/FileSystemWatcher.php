@@ -17,7 +17,6 @@ class FileSystemWatcher extends Command
     protected $description = "Watch the storage/app/watched directory for file changes and handle them";
 
     // This is the path to watch, relative to storage/app
-    // I had to edit the config/filesystems.php file, since the local storage path was by default set to "app/private" --- I changed it to "app"
     protected $watchPath = 'watched';
 
     // A path to save previous state file
@@ -32,7 +31,7 @@ class FileSystemWatcher extends Command
         // This is an infinite loop to keep watching
         while (true) {
             $this->scanAndProcess();
-            sleep(5);
+            sleep(4);
         }
     }
 
@@ -265,11 +264,7 @@ class FileSystemWatcher extends Command
         // Load original file content
         $contents = file_get_contents($path);
 
-        // Check for marker
-        if (str_contains($contents, 'OptimizedByFileSystemWatcher')) {
-            $this->info("Already optimized: $file");
-            return;
-        }
+        
 
         // Load image using Intervention
         $image = Image::make($path);
