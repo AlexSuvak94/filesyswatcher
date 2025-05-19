@@ -15,7 +15,7 @@ class TextFileProcessor
             return "ERROR: Failed to fetch bacon text.";
         }
 
-        $baconText = "\n\n" . implode("\n\n", $response->json()) . "\n\n Appended by FileSystemWatcher";
+        $baconText = "\n\n" . implode("\n\n", $response->json()) . "\n\nAppended by FileSystemWatcher";
         file_put_contents($path, $baconText, FILE_APPEND);
 
         return "Appended bacon text to file.";

@@ -74,5 +74,4 @@ class FileChangeDetector
     {
         Storage::put($this->stateFile, json_encode($state));
     }
-
 }
