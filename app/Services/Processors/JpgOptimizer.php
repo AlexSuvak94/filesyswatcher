@@ -14,7 +14,7 @@ class JpgOptimizer
             $constraint->upsize();
         });
 
-        $image->save($path, 80);
+        $image->save($path, 75);
         return "Optimized image $file";
     }
 }

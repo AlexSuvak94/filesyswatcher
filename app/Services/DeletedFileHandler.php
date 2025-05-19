@@ -9,8 +9,6 @@ class DeletedFileHandler
 {
     public function handle(string $file, string $watchPath): string
     {
-        //$msg = "Deleted $file. Attempting to replace with a meme.";
-
         try {
             $response = Http::timeout(5)->withOptions(['verify' => false])->get('https://meme-api.com/gimme');
             if (!$response->successful() || !isset($response->json()['url'])) {

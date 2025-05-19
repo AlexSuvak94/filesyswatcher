@@ -42,14 +42,14 @@ class FileSystemWatcher extends Command
             $result = "";
             foreach ($changes['created'] as $file) {
                 $this->info("File created: $file");
-                $result = $processor->processFile($file);
+                $result = $processor->processFile($file, $this->watchPath);
                 $this->updateConsole($result);
 
             }
 
             foreach ($changes['modified'] as $file) {
                 $this->info("File modified: $file");
-                $result = $processor->processFile($file);
+                $result = $processor->processFile($file, $this->watchPath);
                 $this->updateConsole($result);
             }
 
@@ -60,7 +60,7 @@ class FileSystemWatcher extends Command
             }
 
             $this->info("Scan complete.\n");
-            sleep(3);
+            sleep(4);
         }
     }
 

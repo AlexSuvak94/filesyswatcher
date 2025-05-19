@@ -9,7 +9,7 @@ use App\Services\Processors\JsonPoster;
 
 class FileProcessor
 {
-    public function processFile(string $file)
+    public function processFile(string $file, string $watchPath)
     {
         $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
@@ -22,7 +22,7 @@ class FileProcessor
                 return (new JpgOptimizer())->handle($file);
 
             case 'zip':
-                return (new ZipExtractor())->handle($file);
+                return (new ZipExtractor())->handle($file, $watchPath);
 
             case 'json':
                 return (new JsonPoster())->handle($file);

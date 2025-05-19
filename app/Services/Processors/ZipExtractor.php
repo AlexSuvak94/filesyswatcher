@@ -6,10 +6,10 @@ use ZipArchive;
 
 class ZipExtractor
 {
-    public function handle(string $file): string
+    public function handle(string $file, string $watchPath): string
     {
         $path = storage_path("app/" . $file);
-        $extractTo = storage_path("app/watched/unzipped/" . pathinfo($file, PATHINFO_FILENAME));
+        $extractTo = storage_path("app/{$watchPath}/unzipped/" . pathinfo($file, PATHINFO_FILENAME));
 
         $zip = new ZipArchive();
         if ($zip->open($path) === true) {
