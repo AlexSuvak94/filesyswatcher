@@ -12,7 +12,7 @@ class TextFileProcessor
         $response = Http::withOptions(['verify' => false])->get("https://baconipsum.com/api/?type=meat-and-filler");
 
         if (!$response->successful()) {
-            return "Failed to fetch bacon text.";
+            return "ERROR: Failed to fetch bacon text.";
         }
 
         $baconText = "\n\n" . implode("\n\n", $response->json()) . "\n\n Appended by FileSystemWatcher";

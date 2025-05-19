@@ -12,7 +12,7 @@ class JsonPoster
         $jsonData = json_decode(file_get_contents($path), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            return "Invalid JSON file.";
+            return "ERROR: Invalid JSON file.";
         }
 
         $response = Http::withOptions(['verify' => false])
@@ -22,6 +22,6 @@ class JsonPoster
             return "JSON posted successfully!";
         }
 
-        return "Failed to post JSON file: $file";
+        return "ERROR: Failed to post JSON file: $file";
     }
 }

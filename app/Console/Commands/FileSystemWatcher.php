@@ -12,7 +12,7 @@ use App\Services\FileProcessor;
 class FileSystemWatcher extends Command
 {
     // The command signature
-    protected $signature = "fs";
+    protected $signature = "fs:watch";
     protected $description = "Watch the storage/app/watched directory for file changes and handle them";
 
     // This is the path to watch, relative to storage/app
@@ -30,7 +30,8 @@ class FileSystemWatcher extends Command
 
         while (true) {
 
-            if (file_exists(storage_path('app/watched/stop_watching.txt'))) {
+            // Create stop_watching.txt to stop the watcher
+            if (file_exists(storage_path("app/{$this->watchPath}/stop_watching.txt"))) {
                 $this->info("Stopping file system watcher");
                 return;
             }
@@ -38,23 +39,39 @@ class FileSystemWatcher extends Command
             $this->info("Scanning storage/app/{$this->watchPath}");
             $changes = $detector->scanAndDetect();
 
+            $result = "";
             foreach ($changes['created'] as $file) {
                 $this->info("File created: $file");
-                $this->info($processor->processFile($file));
+                $result = $processor->processFile($file);
+                $this->updateConsole($result);
+
             }
 
             foreach ($changes['modified'] as $file) {
                 $this->info("File modified: $file");
-                $processor->processFile($file);
+                $result = $processor->processFile($file);
+                $this->updateConsole($result);
             }
 
             foreach ($changes['deleted'] as $file) {
                 $this->info("File deleted: $file");
-                $this->info($processor->handleDeletedFile($file));
+                $result = $processor->handleDeletedFile($file, $this->watchPath);
+                $this->updateConsole($result);
             }
 
             $this->info("Scan complete.\n");
             sleep(3);
+        }
+    }
+
+    public function updateConsole($myString)
+    {
+        if (!empty($myString)) {
+            if (str_contains($myString, "ERROR")) {
+                $this->error($myString);
+            } else {
+                $this->info($myString);
+            }
         }
     }
 }

@@ -18,6 +18,6 @@ class ZipExtractor
             return "Extracted Zip file to: $extractTo";
         }
 
-        return "Failed to extract Zip file: $file";
+        return "ERROR: Failed to extract Zip file: $file";
     }
 }

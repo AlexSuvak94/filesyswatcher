@@ -11,9 +11,10 @@ class JpgOptimizer
         $path = storage_path('app/' . $file);
         $image = Image::make($path)->resize(800, null, function ($constraint){
             $constraint->aspectRatio();
+            $constraint->upsize();
         });
 
-        $image->save($path, 75);
+        $image->save($path, 80);
         return "Optimized image $file";
     }
 }
