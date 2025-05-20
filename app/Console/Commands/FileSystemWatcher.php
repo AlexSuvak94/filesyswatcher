@@ -13,7 +13,7 @@ class FileSystemWatcher extends Command
 {
     // The command signature
     protected $signature = "fs:watch";
-    protected $description = "Watch the storage/app/watched directory for file changes and handle them";
+    protected $description = "Watch the storage/app/watched directory for file changes and handle them as needed";
 
     // This is the path to watch, relative to storage/app
     protected $watchPath = 'watched';
@@ -58,6 +58,10 @@ class FileSystemWatcher extends Command
                 $result = $processor->handleDeletedFile($file, $this->watchPath);
                 $this->updateConsole($result);
             }
+            
+            //if ($changes['created'][0]) {
+                //$this->info(var_dump($changes['created'][0]['hash']));
+            // }
 
             $this->info("Scan complete.\n");
             sleep(4);

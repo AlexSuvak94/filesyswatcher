@@ -29,7 +29,7 @@ class FileChangeDetector
         foreach ($currentState as $file => $modifiedTime) {
             if (!isset($previousState[$file])) {
                 $changes['created'][] = $file;
-            } elseif ($previousState[$file] !== $modifiedTime) {
+            } elseif ($previousState[$file]['hash'] !== $modifiedTime['hash']) { // INSPECT the hash thing
                 $path = storage_path('app/' . $file);
                 $contents = file_get_contents($path);
                 if (!str_contains($contents, "Appended by FileSystemWatcher")) {
@@ -64,7 +64,17 @@ class FileChangeDetector
         $state = [];
 
         foreach ($files as $file) {
-            $state[$file] = Storage::lastModified($file);
+            // $state[$file] = Storage::lastModified($file); -- Maybe Keep Only This Line if Nothing Works
+
+            $fullPath = storage_path('app/' . $file);
+            $contents = file_get_contents($fullPath);
+            $hash = hash('sha256', $contents);
+            $modified = filemtime($fullPath);
+
+            $state[$file] = [
+                'hash' => $hash,
+                'lastModified' => $modified
+            ];
         }
 
         return $state;

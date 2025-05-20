@@ -26,7 +26,7 @@ class DeletedFileHandler
                 return "Replaced with meme from: $memeUrl.";
             }
 
-            return "Failed to download meme image.";
+            return "ERROR: Failed to download meme image.";
 
         } catch (Exception $e) {
             return "ERROR: " . $e->getMessage();

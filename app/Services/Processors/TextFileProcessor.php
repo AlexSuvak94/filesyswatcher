@@ -18,6 +18,6 @@ class TextFileProcessor
         $baconText = "\n\n" . implode("\n\n", $response->json()) . "\n\nAppended by FileSystemWatcher";
         file_put_contents($path, $baconText, FILE_APPEND);
 
-        return "Appended bacon text to file.";
+        return "Appended bacon text to $file.";
     }
 }
