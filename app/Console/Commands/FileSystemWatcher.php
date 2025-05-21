@@ -11,7 +11,7 @@ use App\Services\FileProcessor;
 
 class FileSystemWatcher extends Command
 {
-    // The command signature
+    // The command signature (use this in console)
     protected $signature = "fs:watch";
     protected $description = "Watch the storage/app/watched directory for file changes and handle them as needed";
 
@@ -41,7 +41,7 @@ class FileSystemWatcher extends Command
 
             $result = "";
             foreach ($changes['created'] as $file) {
-                $this->info("File created: $file");
+                $this->info("New File: $file");
                 $result = $processor->processFile($file, $this->watchPath);
                 $this->updateConsole($result);
 
