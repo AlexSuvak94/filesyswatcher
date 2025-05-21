@@ -6,27 +6,22 @@
 
 And that's it! It will now track changes in the storage/app/watched folder
 
-*** PLEASE NOTE:
+** PLEASE NOTE:
 
 This repository was built as part of a technical assignment. The main goal was to demonstrate practical knowledge of Laravel, file operations, CLI commands, and external integrations. Some implementation choices were made for simplicity, clarity, and speed of delivery, and are not intended for production use as-is.
 
-Known Limitations (Intentionally Accepted for This Test):
-Infinite Loop Without Signal Handling
-The watcher runs in a while (true) loop with no graceful shutdown support. In a production scenario, this would include signal handling (e.g., pcntl_signal) or use a daemon manager.
+*** PLEASE NOTE: This project was made as a test for one of my previous clients.
 
-Polling-Based File Watcher
-The watcher uses polling via sleep(5), which is not as efficient as event-driven systems (like inotify or Node's fs.watch). This was chosen for portability and simplicity in PHP.
+WHAT IT DOES: This project tracks changes in project_root/storage/app/watched folder and handles them in certain ways. Tracking (scanning) occurs every 5 seconds and is reported to the console.
 
-Direct File Modifications
-For test purposes, images and text files are modified in-place. Image metadata markers and appended strings (like bacon ipsum) are inserted directly, which might corrupt real-world binary formats — in production, a safer tagging/metadata approach would be preferred.
+FOR EXAMPLE:
 
-External APIs Used Without Caching
-The use of open APIs (meme generation, bacon ipsum, webhook posting) is done in real-time with no retry, caching, or fallback logic. This could introduce delays or failures if APIs are slow/unavailable.
+1. Each JPG file in the folder will automatically be optimized for the web and its quality reduced to 80%.
 
-Hardcoded Configuration
-Endpoints, API URLs, and paths are hardcoded for brevity. In real-world use, they would be abstracted into config files or .env variables.
+2. Each JSON file will be tested to see if it’s really a correct JSON file.
 
-No Unit Tests
-While the logic is modular and testable, no formal unit tests are included due to time constraints and the project's scope.
+3. Each TXT file will be appended with random text from the API (https://baconipsum.com/api/?type=meat-and-filler)
 
-This README and implementation reflect my awareness of real-world concerns and tradeoffs. I intentionally opted for clarity and coverage over edge-case robustness, given the test-oriented context of this task.
+4. Each ZIP file will automatically be extracted.
+
+5. Each deleted file will be replaced with a random MEME from the API (https://meme-api.com/gimme)

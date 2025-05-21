@@ -64,7 +64,7 @@ class FileSystemWatcher extends Command
             // }
 
             $this->info("Scan complete.\n");
-            sleep(4);
+            sleep(5);
         }
     }
 
